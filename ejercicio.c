@@ -15,12 +15,18 @@ int main() {
     }
 
     while (fscanf(entrada, "%d", &num) == 1) {
-        numeros = (int *)realloc(numeros, (cantidad + 1) * sizeof(int));
-        if (numeros == NULL) {
+        int *nuevo = (int *)malloc((cantidad + 1) * sizeof(int));
+        if (nuevo == NULL) {
             printf("Error al reservar memoria\n");
+            free(numeros);
             fclose(entrada);
             return 1;
         }
+        for (int i = 0; i < cantidad; i++) {
+            nuevo[i] = numeros[i];
+        }
+        free(numeros);
+        numeros = nuevo;
         numeros[cantidad] = num;
         suma += num;
         cantidad++;
